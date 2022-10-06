@@ -220,18 +220,31 @@ class Library:
             if self._lookup_patron_from_id(customer) == patron_id:
                 for library_items in self._holdings:
                     if self._lookup_library_item_from_id(library_item_id) == library_item_id:
-                        if library_items.get_location() == "ON_SHELF":
+                        if library_items.get_location() == "CHECKED_OUT":
+                            return "item already checked out"
+                        elif library_items.get_location() == "ON_HOLD_SHELF" and library_items.get_requested_by() == customer:
+                            return "item on hold by other patron"
+                        else:
                             library_items.set_location() == "CHECKED_OUT"
                             library_items.set_checked_out_by(customer)
                             library_items.set_date_checked_out(self._current_date)
                             customer.add_library_item(library_items)
+                            if library_items.get_requested_by() == customer:
+                                library_items.set_requested_by(None)
                             return "check out successful"
-                        elif library_items.get_location() == "ON_HOLD_SHELF":
-                            return "item on hold by other patron"
-                        else:
-                            return "item already checked out"
                 return "item not found"
             return "patron not found"
+
+    def return_library_item(self, library_item_id):
+        """
+        Checks for LibraryItem in holdings collection and returns wether or not the item is already in the list or not.
+        Updates Patron's checked out items and adds returned library item to the holdings list.
+        """
+        for library_items in self._holdings:
+            if self._lookup_library_item_from_id(library_items) == library_item_id:
+                if library_items.get_location() == "ON_SHELF":
+                    return "item already in library"
+
 
     def pay_fine(self, patron_id, fine):
         """

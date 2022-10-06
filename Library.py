@@ -194,7 +194,59 @@ class Library:
         self._members.append(patron)
         return self._members
 
-    
+    def lookup_library_item_from_id(self, library_item_id):
+        """Returns library item based on id associated with library item"""
+        for library_items in self._holdings:
+            if library_items.get_library_item_id() == library_item_id:
+                return library_items
+        else:
+            return None
+
+    def lookup_patron_from_id(self, patron_id):
+        """Returns the patron id based on the id parameter"""
+        for ids in self._members:
+            if ids.get_patron_id() == patron_id:
+                return ids
+        else:
+            return None
+
+    def check_out_library_item(self, patron_id, library_item_id):
+        """
+        Checks for Patron's ID to see if they are in the members collection, returns patron not found if they are not
+        within the members holdings. Then, checks for library item ID and either returns the item is not found, item is
+        already checked out, or item is on hold from another patron depending on item status.
+        """
+        for customer in self._members:
+            if self._lookup_patron_from_id(customer) == patron_id:
+                for library_items in self._holdings:
+                    if self._lookup_library_item_from_id(library_item_id) == library_item_id:
+                        if library_items.get_location() == "ON_SHELF":
+                            library_items.set_location() == "CHECKED_OUT"
+                            library_items.set_checked_out_by(customer)
+                            library_items.set_date_checked_out(self._current_date)
+                            customer.add_library_item(library_items)
+                            return "check out successful"
+                        elif library_items.get_location() == "ON_HOLD_SHELF":
+                            return "item on hold by other patron"
+                        else:
+                            return "item already checked out"
+                return "item not found"
+            return "patron not found"
+
+    def pay_fine(self, patron_id, fine):
+        """
+        Checks for patron ID and returns the fine amount that is being paid. Adds 10 cents to fine for each overdue
+        LibraryItem checked out by the patron.
+        """
+    def increment_current_date(self):
+        """
+        Increments the current day by 1 and increases Patron's fine amount by 10 cents for each overdue LibraryItem
+        """
+        self._current_date += 1
 
 
+def main():
 
+
+if __name__ == '__main__':
+    main()

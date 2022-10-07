@@ -256,28 +256,32 @@ class Library:
                     return "return successful"
         return "item not found"
 
-    def pay_fine(self, patron_id, fine):
+    def pay_fine(self, patron_id, amount_in_dollars):
         """
-        Checks for patron ID and returns the fine amount that is being paid. Adds 10 cents to fine for each overdue
-        LibraryItem checked out by the patron.
+        Checks for patron ID and returns the fine amount that is being paid. Returns either if the patron is found
+        matching the ID or the fine is amended and returns that the payment was successful.
         """
         patron = self.get_patron_id(patron_id)
         if patron is None:
             return "patron not found"
         else:
-            patron.amend_fine(fine)
+            patron.amend_fine() - amount_in_dollars
             return "payment successful"
-
 
     def increment_current_date(self):
         """
-        Increments the current day by 1 and increases Patron's fine amount by 10 cents for each overdue LibraryItem
+        Increments the current day by 1 and increases Patron's fine amount by 10 cents for each overdue LibraryItem that
+        they have checked out.
         """
         self._current_date += 1
-        for days in
+        for customer in self._members:
+            for library_items in customer.get_checked_out_items():
+                if library_items.get_date_checked_out() > library_items.get_check_out_length():
+                    customer.amend_fine() + 0.10
 
 
 def main():
+
 
 if __name__ == '__main__':
     main()

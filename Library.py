@@ -7,6 +7,7 @@
 
 class LibraryItem:
     """Class that represents items found within the library"""
+
     def __init__(self, library_item_id, title):
         """Initilizes LibraryItem class"""
         self._library_item_id = library_item_id
@@ -58,6 +59,7 @@ class LibraryItem:
 
 class Book(LibraryItem):
     """Represents a book that is inherited from LibraryItem"""
+
     def __init__(self, library_item_id, title, author):
         """Initilizes Book class"""
         super().__init__(library_item_id, title)
@@ -81,6 +83,7 @@ class Book(LibraryItem):
 
 class Album(LibraryItem):
     """Represents an album that is inherited from LibraryItem"""
+
     def __init__(self, library_item_id, title, artist):
         """Initilizes Album class"""
         super().__init__(library_item_id, title)
@@ -104,6 +107,7 @@ class Album(LibraryItem):
 
 class Movie(LibraryItem):
     """Represents a movie that is inherited from LibraryItem"""
+
     def __init__(self, library_item_id, title, director):
         """Initilizes Movie class"""
         super().__init__(library_item_id, title)
@@ -123,6 +127,7 @@ class Movie(LibraryItem):
 
 class Patron:
     """Class that represents a Patron and their fees and checkouts of library items"""
+
     def __init__(self, name, patron_id):
         """Initializes Patron class"""
         self._name = name
@@ -166,6 +171,7 @@ class Patron:
 
 class Library:
     """Class that represents the Library """
+
     def __init__(self):
         """Initializes current date as well as holdings and member collections as empty lists"""
         self._holdings = []
@@ -281,7 +287,5 @@ class Library:
 
 
 def main():
-
-
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()

@@ -7,7 +7,6 @@
 
 class LibraryItem:
     """Class that represents items found within the library"""
-
     def __init__(self, library_item_id, title):
         """Initilizes LibraryItem class"""
         self._library_item_id = library_item_id
@@ -57,25 +56,20 @@ class LibraryItem:
         """Set method for LibraryItem check out by patron"""
         self._checked_out_by = patron
 
+    def get_check_out_length(self):
+        return self.get_check_out_length()
+
 
 class Book(LibraryItem):
     """Represents a book that is inherited from LibraryItem"""
-
     def __init__(self, library_item_id, title, author):
         """Initilizes Book class"""
         super().__init__(library_item_id, title)
-        self._library_item_id = library_item_id
-        self._title = title
-        self._location = "ON_SHELF"
-        self._date_checked_out = 0
-        self._requested_by = None
-        self._checked_out_by = None
         self._author = author
 
     def get_check_out_length(self):
         """Returns check out length of Book"""
-        check_out_length = 21
-        return check_out_length
+        return 21
 
     def get_author(self):
         """Returns author of Book"""
@@ -84,22 +78,14 @@ class Book(LibraryItem):
 
 class Album(LibraryItem):
     """Represents an album that is inherited from LibraryItem"""
-
     def __init__(self, library_item_id, title, artist):
         """Initilizes Album class"""
         super().__init__(library_item_id, title)
-        self._library_item_id = library_item_id
-        self._title = title
-        self._location = "ON_SHELF"
-        self._date_checked_out = 0
-        self._requested_by = None
-        self._checked_out_by = None
         self._artist = artist
 
     def get_check_out_length(self):
         """Returns check out length of Album"""
-        check_out_length = 14
-        return check_out_length
+        return 14
 
     def get_artist(self):
         """Get method for artist"""
@@ -108,22 +94,14 @@ class Album(LibraryItem):
 
 class Movie(LibraryItem):
     """Represents a movie that is inherited from LibraryItem"""
-
     def __init__(self, library_item_id, title, director):
         """Initilizes Movie class"""
         super().__init__(library_item_id, title)
-        self._library_item_id = library_item_id
-        self._title = title
-        self._location = "ON_SHELF"
-        self._date_checked_out = 0
-        self._requested_by = None
-        self._checked_out_by = None
         self._director = director
 
     def get_check_out_length(self):
         """Returns check out length of Movie"""
-        check_out_length = 7
-        return check_out_length
+        return 7
 
     def get_director(self):
         """Returns director"""
@@ -227,7 +205,6 @@ class Library:
         within the members holdings. Then, checks for library item ID and either returns the item is not found, item is
         already checked out, or item is on hold from another patron depending on item status.
         """
-
         for customer in self._members:
             if self.lookup_patron_from_id(customer) == patron_id:
                 for library_items in self._holdings:

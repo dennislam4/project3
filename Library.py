@@ -15,6 +15,7 @@ class LibraryItem:
         self._date_checked_out = 0
         self._requested_by = None
         self._checked_out_by = None
+        self._check_out_length = 0
 
     def get_library_item_id(self):
         """Get method for unique identifier for a LibraryItem"""
@@ -40,6 +41,10 @@ class LibraryItem:
         """Get method for LibraryItem check out from patron"""
         return self._checked_out_by
 
+    def get_check_out_length(self):
+        """Returns check_out_length"""
+        return self.get_check_out_length()
+
     def set_location(self, location):
         """Set method for location of LibraryItem."""
         self._location = location
@@ -56,9 +61,6 @@ class LibraryItem:
         """Set method for LibraryItem check out by patron"""
         self._checked_out_by = patron
 
-    def get_check_out_length(self):
-        return self.get_check_out_length()
-
 
 class Book(LibraryItem):
     """Represents a book that is inherited from LibraryItem"""
@@ -69,7 +71,8 @@ class Book(LibraryItem):
 
     def get_check_out_length(self):
         """Returns check out length of Book"""
-        return 21
+        check_out_length = 21
+        return check_out_length
 
     def get_author(self):
         """Returns author of Book"""
@@ -85,7 +88,8 @@ class Album(LibraryItem):
 
     def get_check_out_length(self):
         """Returns check out length of Album"""
-        return 14
+        check_out_length = 14
+        return check_out_length
 
     def get_artist(self):
         """Get method for artist"""
@@ -101,7 +105,8 @@ class Movie(LibraryItem):
 
     def get_check_out_length(self):
         """Returns check out length of Movie"""
-        return 7
+        check_out_length = 7
+        return check_out_length
 
     def get_director(self):
         """Returns director"""

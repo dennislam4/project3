@@ -151,7 +151,6 @@ class Patron:
         self._fine_amount += fine
 
 
-
 class Library:
     """Class that represents the Library """
     def __init__(self):
@@ -224,28 +223,6 @@ class Library:
                 library_item.set_requested_by(None)
             return "check out successful"
 
-    def request_library_item(self, patron_id,  library_item_id):
-        """
-        Checks for patron's ID and the library ID then returns wether or not item is in Library's holdings. Returns
-        wether or not patron was found or the library item was found in Library's holdings. Updates library's requests
-        and returns request successful.
-        """
-        for patron in self._members:
-            if self.lookup_patron_from_id(patron) == patron_id:
-                for library_items in self._holdings:
-                    item_location = library_items.get_location()
-                    if self.lookup_library_item_from_id(library_item_id) == library_item_id:
-                        if item_location == "ON_HOLD_SHELF":
-                            return "item already on hold"
-                        elif item_location == "CHECKED_OUT":
-                            return "item not found"
-                        else:
-                            library_items.set_location("ON_HOLD_SHELF")
-                            library_items.set_requested_by(patron)
-                            return "request successful"
-                return "item not found"
-        return "patron not found"
-
     def return_library_item(self, library_item_id):
         """
         Checks for LibraryItem in holdings collection and returns wether or not the item is already in the list or not.
@@ -266,6 +243,27 @@ class Library:
                         library_items.set_location("ON_SHELF")
                     return "return successful"
         return "item not found"
+
+    def request_library_item(self, patron_id,  library_item_id):
+        """
+        Checks for patron's ID and the library ID then returns wether or not item is in Library's holdings. Returns
+        wether or not patron was found or the library item was found in Library's holdings. Updates library's requests
+        and returns request successful.
+        """
+        patron = self.lookup_patron_from_id(patron_id)
+        if not patron:
+            return "patron not found"
+
+        library_item = self.lookup_library_item_from_id(library_item_id)
+        item_location = library_item.get_location()
+        if item_location == "ON_HOLD_SHELF":
+            return "item already on hold"
+        elif item_location == "CHECKED_OUT":
+            return "item not found"
+        else:
+            library_item.set_location("ON_HOLD_SHELF")
+            library_item.set_requested_by(patron)
+            return "request successful"
 
     def pay_fine(self, patron_id, amount_in_dollars):
         """
@@ -293,7 +291,6 @@ class Library:
                     patron.amend_fine(0.10)
 
 
-
 def main():
     b1 = Book("345", "Phantom Tollbooth", "Juster")
     b2 = Book("456", "blah", "boop")
@@ -310,14 +307,18 @@ def main():
     lib.add_patron(p1)
     lib.add_patron(p2)
 
+    for _ in range(7):
+        lib.increment_current_date()  # 7 days pass
     lib.check_out_library_item("bcd", "456")
     for _ in range(28):
-        lib.increment_current_date()  # 7 days pass
+        lib.increment_current_date()  # 28 days pass
     p2_fine = p2.get_fine_amount()
     print(p2_fine)
-    lib.pay_fine("bcd", p2_fine)
+    lib.pay_fine("bcd", p2_fine + 1.0)
     lib.return_library_item("456")
+    p2_fine = p2.get_fine_amount()
+    print(p2_fine)
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()

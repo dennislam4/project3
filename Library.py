@@ -293,34 +293,5 @@ class Library:
                     patron.amend_fine(0.10)
 
 
-#def main():
-    # b1 = Book("345", "Phantom Tollbooth", "Juster")
-    # b2 = Book("456", "blah", "boop")
-    #
-    # print(b1.get_author())
-    # print(b2.get_author())
-    #
-    # p1 = Patron("Felicity", "abc")
-    # p2 = Patron("Waldo", "bcd")
-    #
-    # lib = Library()
-    # lib.add_library_item(b1)
-    # lib.add_library_item(b2)
-    # lib.add_patron(p1)
-    # lib.add_patron(p2)
-    #
-    # for _ in range(7):
-    #     lib.increment_current_date()  # 7 days pass
-    # lib.check_out_library_item("bcd", "456")
-    # for _ in range(28):
-    #     lib.increment_current_date()  # 28 days pass
-    # p2_fine = p2.get_fine_amount()
-    # print(p2_fine)
-    # lib.pay_fine("bcd", p2_fine + 1.0)
-    # lib.return_library_item("456")
-    # p2_fine = p2.get_fine_amount()
-    # print(p2_fine)
-    #
-
 if __name__ == '__main__':
     main()

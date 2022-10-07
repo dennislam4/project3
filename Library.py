@@ -293,7 +293,7 @@ class Library:
                     patron.amend_fine(0.10)
 
 
-def main():
+#def main():
     # b1 = Book("345", "Phantom Tollbooth", "Juster")
     # b2 = Book("456", "blah", "boop")
     #

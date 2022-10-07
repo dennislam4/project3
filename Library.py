@@ -115,7 +115,7 @@ class Movie(LibraryItem):
 
 class Patron:
     """Class that represents a Patron and their fees and checkouts of library items"""
-    def __init__(self, name, patron_id):
+    def __init__(self, patron_id, name):
         """Initializes Patron class"""
         self._name = name
         self._patron_id = patron_id
@@ -233,10 +233,12 @@ class Library:
             if library_items.get_library_item_id() == library_item_id:
                 if id_lookup.get_location() != "CHECKED_OUT":
                     return "item already in library"
+
                 if id_lookup.get_location() == "CHECKED_OUT":
                     patron = library_items.get_checked_out_by()
                     patron.remove_library_item(library_items)
                     library_items.set_checked_out_by(None)
+
                     if library_items.get_requested_by() is not None:
                         library_items.set_location("ON_HOLD_SHELF")
                     else:
@@ -291,34 +293,34 @@ class Library:
                     patron.amend_fine(0.10)
 
 
-# def main():
-#     b1 = Book("345", "Phantom Tollbooth", "Juster")
-#     b2 = Book("456", "blah", "boop")
-#
-#     print(b1.get_author())
-#     print(b2.get_author())
-#
-#     p1 = Patron("Felicity", "abc")
-#     p2 = Patron("Waldo", "bcd")
-#
-#     lib = Library()
-#     lib.add_library_item(b1)
-#     lib.add_library_item(b2)
-#     lib.add_patron(p1)
-#     lib.add_patron(p2)
-#
-#     for _ in range(7):
-#         lib.increment_current_date()  # 7 days pass
-#     lib.check_out_library_item("bcd", "456")
-#     for _ in range(28):
-#         lib.increment_current_date()  # 28 days pass
-#     p2_fine = p2.get_fine_amount()
-#     print(p2_fine)
-#     lib.pay_fine("bcd", p2_fine + 1.0)
-#     lib.return_library_item("456")
-#     p2_fine = p2.get_fine_amount()
-#     print(p2_fine)
-#
+def main():
+    # b1 = Book("345", "Phantom Tollbooth", "Juster")
+    # b2 = Book("456", "blah", "boop")
+    #
+    # print(b1.get_author())
+    # print(b2.get_author())
+    #
+    # p1 = Patron("Felicity", "abc")
+    # p2 = Patron("Waldo", "bcd")
+    #
+    # lib = Library()
+    # lib.add_library_item(b1)
+    # lib.add_library_item(b2)
+    # lib.add_patron(p1)
+    # lib.add_patron(p2)
+    #
+    # for _ in range(7):
+    #     lib.increment_current_date()  # 7 days pass
+    # lib.check_out_library_item("bcd", "456")
+    # for _ in range(28):
+    #     lib.increment_current_date()  # 28 days pass
+    # p2_fine = p2.get_fine_amount()
+    # print(p2_fine)
+    # lib.pay_fine("bcd", p2_fine + 1.0)
+    # lib.return_library_item("456")
+    # p2_fine = p2.get_fine_amount()
+    # print(p2_fine)
+    #
 
 if __name__ == '__main__':
     main()

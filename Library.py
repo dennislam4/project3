@@ -228,6 +228,28 @@ class Library:
                 return "item not found"
             return "patron not found"
 
+    def request_library_item(self, patron_id,  library_item_id):
+        """
+        Checks for patron's ID and the library ID then returns wether or not item is in Library's holdings. Returns
+        wether or not patron was found or the library item was found in Library's holdings. Updates library's requests
+        and returns request successful.
+        """
+        for patron in self._members:
+            if self.lookup_patron_from_id(patron) == patron_id:
+                for library_items in self._holdings:
+                    item_location = library_items.get_location()
+                    if self.lookup_library_item_from_id(library_item_id) == library_item_id:
+                        if item_location == "ON_HOLD_SHELF":
+                            return "item already on hold"
+                        elif item_location == "CHECKED_OUT":
+                            return "item not found"
+                        else:
+                            library_items.set_location("ON_HOLD_SHELF")
+                            library_items.set_requested_by(patron)
+                            return "request successful"
+                return "item not found"
+        return "patron not found"
+
     def return_library_item(self, library_item_id):
         """
         Checks for LibraryItem in holdings collection and returns wether or not the item is already in the list or not.
@@ -274,6 +296,34 @@ class Library:
 
 
 def main():
+    b1 = Book("345", "Phantom Tollbooth", "Juster")
+    a1 = Album("456", "...And His Orchestra", "The Fastbacks")
+    m1 = Movie("567", "Laputa", "Miyazaki")
+    print(b1.get_author())
+    print(a1.get_artist())
+    print(m1.get_director())
 
-    if __name__ == '__main__':
-        main()
+    p1 = Patron("abc", "Felicity")
+    p2 = Patron("bcd", "Waldo")
+
+    lib = Library()
+    lib.add_library_item(b1)
+    lib.add_library_item(a1)
+    lib.add_patron(p1)
+    lib.add_patron(p2)
+
+    lib.check_out_library_item("bcd", "456")
+    for _ in range(7):
+        lib.increment_current_date()  # 7 days pass
+    lib.check_out_library_item("abc", "567")
+    loc = a1.get_location()
+    lib.request_library_item("abc", "456")
+    for _ in range(57):
+        lib.increment_current_date()  # 57 days pass
+    p2_fine = p2.get_fine_amount()
+    lib.pay_fine("bcd", p2_fine)
+    lib.return_library_item("456")
+
+
+# if __name__ == '__main__':
+#     main()

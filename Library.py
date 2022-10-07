@@ -274,12 +274,12 @@ class Library:
         Checks for patron ID and returns the fine amount that is being paid. Returns either if the patron is found
         matching the ID or the fine is amended and returns that the payment was successful.
         """
-        customer = self.get_patron_id(patron_id)
-        if customer is None:
-            return "patron not found"
-        else:
-            customer.amend_fine(-amount_in_dollars)
-            return "payment successful"
+        for customer in self._members:
+            if customer.get_patron_id() != patron_id:
+                return "patron not found"
+            else:
+                customer.amend_fine(-amount_in_dollars)
+                return "payment successful"
 
     def increment_current_date(self):
         """

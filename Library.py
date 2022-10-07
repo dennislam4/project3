@@ -101,7 +101,7 @@ class Album(LibraryItem):
         check_out_length = 14
         return check_out_length
 
-    def get_album(self):
+    def get_artist(self):
         """Get method for artist"""
         return self._artist
 
@@ -124,6 +124,10 @@ class Movie(LibraryItem):
         """Returns check out length of Movie"""
         check_out_length = 7
         return check_out_length
+
+    def get_director(self):
+        """Returns director"""
+        return self._director
 
 
 class Patron:
@@ -229,7 +233,7 @@ class Library:
                     if self.lookup_library_item_from_id(library_item_id) == library_item_id:
                         if library_items.get_location() == "CHECKED_OUT":
                             return "item already checked out"
-                        elif library_items.get_location() == "ON_HOLD_SHELF" and library_items.get_requested_by() == customer:
+                        if library_items.get_location() == "ON_HOLD_SHELF" and library_items.get_requested_by() == customer:
                             return "item on hold by other patron"
                         else:
                             library_items.set_location() == "CHECKED_OUT"
@@ -268,11 +272,11 @@ class Library:
         Checks for patron ID and returns the fine amount that is being paid. Returns either if the patron is found
         matching the ID or the fine is amended and returns that the payment was successful.
         """
-        patron = self.get_patron_id(patron_id)
-        if patron is None:
+        customer = self.get_patron_id(patron_id)
+        if customer is None:
             return "patron not found"
         else:
-            patron.amend_fine(-amount_in_dollars)
+            customer.amend_fine(-amount_in_dollars)
             return "payment successful"
 
     def increment_current_date(self):

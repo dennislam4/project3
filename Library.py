@@ -272,7 +272,7 @@ class Library:
         for customer in self._members:
             for library_items in customer.get_checked_out_items():
                 if library_items.get_date_checked_out() > library_items.get_check_out_length():
-                    customer.amend_fine() + 0.10
+                    customer.amend_fine(0.10)
 
 
 def main():

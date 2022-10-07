@@ -19,6 +19,7 @@ class LibraryItem:
 
     def get_library_item_id(self):
         """Get method for unique identifier for a LibraryItem"""
+        return self._library_item_id
 
     def get_location(self):
         """Get method for LibraryItem's location"""

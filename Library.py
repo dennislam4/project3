@@ -43,7 +43,7 @@ class LibraryItem:
 
     def get_check_out_length(self):
         """Returns check_out_length"""
-        return self.get_check_out_length()
+        return self._check_out_length
 
     def set_location(self, location):
         """Set method for location of LibraryItem."""
@@ -115,7 +115,6 @@ class Movie(LibraryItem):
 
 class Patron:
     """Class that represents a Patron and their fees and checkouts of library items"""
-
     def __init__(self, name, patron_id):
         """Initializes Patron class"""
         self._name = name
@@ -159,7 +158,6 @@ class Patron:
 
 class Library:
     """Class that represents the Library """
-
     def __init__(self):
         """Initializes current date as well as holdings and member collections as empty lists"""
         self._holdings = []
@@ -271,10 +269,11 @@ class Library:
         self._current_date += 1
         for customer in self._members:
             for library_items in customer.get_checked_out_items():
-                if self._current_date - library_items.get_date_checked_out() > library_items.get_check_out_length():
+                if library_items.get_date_checked_out() > library_items.get_check_out_length():
                     customer.amend_fine() + 0.10
 
 
 def main():
+
     if __name__ == '__main__':
         main()

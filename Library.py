@@ -272,7 +272,7 @@ class Library:
         if patron is None:
             return "patron not found"
         else:
-            patron.amend_fine() - amount_in_dollars
+            patron.amend_fine(-amount_in_dollars)
             return "payment successful"
 
     def increment_current_date(self):

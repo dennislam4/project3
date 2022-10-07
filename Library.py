@@ -1,9 +1,9 @@
 # Author: Dennis Lam
 # GitHub username: dennislam4
 # Date: 10-03-2022
-# Description: Library simulator with different classes that represent the patron, library items, and the library itself.
-# Books, albums, and movies are the three classes that are inherited from the LibraryItem class to represent the items
-# that the library contains.
+# Description: Library simulator with different classes that represent the patron, library items, and the library
+# itself . Books, albums, and movies are the three classes that are inherited from the LibraryItem class to represent
+# the items that the library contains.
 
 class LibraryItem:
     """Class that represents items found within the library"""
@@ -227,16 +227,18 @@ class Library:
         within the members holdings. Then, checks for library item ID and either returns the item is not found, item is
         already checked out, or item is on hold from another patron depending on item status.
         """
+
         for customer in self._members:
             if self.lookup_patron_from_id(customer) == patron_id:
                 for library_items in self._holdings:
+                    item_location = library_items.get_location()
                     if self.lookup_library_item_from_id(library_item_id) == library_item_id:
-                        if library_items.get_location() == "CHECKED_OUT":
+                        if item_location == "CHECKED_OUT":
                             return "item already checked out"
-                        if library_items.get_location() == "ON_HOLD_SHELF" and library_items.get_requested_by() == customer:
+                        if item_location == "ON_HOLD_SHELF" and library_items.get_requested_by() == customer:
                             return "item on hold by other patron"
                         else:
-                            library_items.set_location() == "CHECKED_OUT"
+                            library_items.set_location("CHECKED_OUT")
                             library_items.set_checked_out_by(customer)
                             library_items.set_date_checked_out(self._current_date)
                             customer.add_library_item(library_items)
